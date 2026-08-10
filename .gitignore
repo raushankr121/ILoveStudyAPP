@@ -1,0 +1,20 @@
+# Google Services & Credentials
+google-services.json
+**/google-services.json
+*.pem
+
+# Environment Variables
+.env
+.env.*
+*.env
+
+# Dependencies
+node_modules/
+
+# Build & Cache Outputs
+.next/
+out/
+build/
+dist/
+.idea/
+.DS_Store
