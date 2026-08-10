@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
+import { getApiBaseUrl } from "../../../../lib/apiConfig";
 
 function CalendarIcon({ className = "" }: { className?: string }) {
   return (
@@ -43,7 +44,7 @@ function SscCglDashboardContent() {
   useEffect(() => {
     const fetchDbShifts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/exams");
+        const response = await fetch(`${getApiBaseUrl()}/api/exams`);
         if (!response.ok) throw new Error("Failed to fetch exams");
         const data = await response.json();
 

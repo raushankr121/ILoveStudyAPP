@@ -2,7 +2,15 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Capacitor } from '@capacitor/core';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
+import { 
+  signInWithPopup, 
+  signInWithCredential, 
+  GoogleAuthProvider, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword 
+} from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 import { syncUserProfile } from '../../lib/profileApi';
 
@@ -74,7 +82,27 @@ const Login = () => {
     setError('');
     setLoading(true);
     try {
-      const userCredential = await signInWithPopup(auth, googleProvider);
+      let userCredential;
+
+      if (Capacitor.isNativePlatform()) {
+        try {
+          // Native Google Sign-In on Capacitor Android/iOS
+          const result = await FirebaseAuthentication.signInWithGoogle();
+          const idToken = result.credential?.idToken;
+          if (!idToken) {
+            throw new Error('Google Sign-In failed: No ID Token returned.');
+          }
+          const credential = GoogleAuthProvider.credential(idToken);
+          userCredential = await signInWithCredential(auth, credential);
+        } catch (nativeErr) {
+          console.error("Native Google Sign-In failed:", nativeErr);
+          throw new Error(nativeErr.message || 'Native Google Sign-In failed. Please ensure the SHA-1 fingerprint is registered in Firebase Console.');
+        }
+      } else {
+        // Web fallback
+        userCredential = await signInWithPopup(auth, googleProvider);
+      }
+
       const token = await userCredential.user.getIdToken();
       await persistSession(userCredential.user, token);
       router.push('/pages/dashboard');

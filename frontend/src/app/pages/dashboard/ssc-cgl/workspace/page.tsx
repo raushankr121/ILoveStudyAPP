@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { getApiBaseUrl } from '../../../../../lib/apiConfig';
 import { useTest } from '../../../../context/TestContext';
 import { LatexRenderer } from '../../../../components/LatexRenderer';
 
@@ -95,7 +96,7 @@ function SscTestWorkspaceContent() {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3000);
-      const res = await fetch('http://localhost:5000/api/exams', { 
+      const res = await fetch(`${getApiBaseUrl()}/api/exams`, { 
         method: 'HEAD',
         signal: controller.signal 
       });

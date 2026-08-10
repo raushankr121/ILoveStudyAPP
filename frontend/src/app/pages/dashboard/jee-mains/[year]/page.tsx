@@ -1,30 +1,15 @@
-"use client";
+import YearWorkspaceClient from "./YearWorkspaceClient";
 
-import React from 'react';
-import { useRouter, useParams } from 'next/navigation';
+export function generateStaticParams() {
+  return [
+    { year: "2022" },
+    { year: "2023" },
+    { year: "2024" },
+    { year: "2025" },
+    { year: "2026" },
+  ];
+}
 
 export default function YearWorkspacePage() {
-  const router = useRouter();
-  const params = useParams();
-
-  // Next.js useParams extracts the year from the URL safely in client components
-  const currentYear = (params?.year as string) || '2026';
-
-  return (
-    <div className="p-8">
-      <button
-        onClick={() => router.push('/pages/dashboard/jee-mains?type=mains')}
-        className="text-blue-600 mb-6 font-bold"
-      >
-        &larr; Back to Years List
-      </button>
-
-      <h1 className="text-3xl font-extrabold text-gray-800">
-        JEE Mains - {currentYear} Workspace
-      </h1>
-      <p className="mt-2 text-gray-600">
-        This single file handles every year automatically!
-      </p>
-    </div>
-  );
+  return <YearWorkspaceClient />;
 }

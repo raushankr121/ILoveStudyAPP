@@ -1,4 +1,6 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+import { getApiBaseUrl } from "./apiConfig";
+
+const API_BASE = getApiBaseUrl();
 
 export type StreakData = {
   currentStreak: number;

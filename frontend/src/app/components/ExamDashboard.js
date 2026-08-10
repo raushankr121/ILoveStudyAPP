@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect } from 'react';
+import { getApiBaseUrl } from '../../lib/apiConfig';
 
 const ExamDashboard = () => {
   useEffect(() => {
     const fetchExams = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/exams', {
+        const response = await fetch(`${getApiBaseUrl()}/api/exams`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

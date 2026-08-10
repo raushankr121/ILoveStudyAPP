@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ILoveStudy</string>
+    <string name="title_activity_main">ILoveStudy</string>
+    <string name="package_name">ilovestudy.app.k18</string>
+    <string name="custom_url_scheme">ilovestudy.app.k18</string>
+</resources>

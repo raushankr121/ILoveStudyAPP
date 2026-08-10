@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { getApiBaseUrl } from '../../lib/apiConfig';
 
 interface Question {
   id: string;
@@ -65,7 +66,7 @@ export const TestProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token') || 'SIMULATED_TOKEN';
-      const response = await axios.get(`http://localhost:5000/api/exams/shifts/${shiftId}`, {
+      const response = await axios.get(`${getApiBaseUrl()}/api/exams/shifts/${shiftId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -96,7 +97,7 @@ export const TestProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const token = localStorage.getItem('token') || 'SIMULATED_TOKEN';
       // 2. Stream payload directly into our high-performance Redis cache backend
-      await axios.post('http://localhost:5000/api/test/save-answer', {
+      await axios.post(`${getApiBaseUrl()}/api/test/save-answer`, {
         shiftId: activeShiftId,
         questionId,
         selectedOption: option,
@@ -114,7 +115,7 @@ export const TestProvider = ({ children }: { children: React.ReactNode }) => {
   // Final Exam submission wrapper
   const submitFinalExam = async (): Promise<any> => {
     const token = localStorage.getItem('token') || 'SIMULATED_TOKEN';
-    const response = await axios.post('http://localhost:5000/api/test/submit', {
+    const response = await axios.post(`${getApiBaseUrl()}/api/test/submit`, {
       shiftId: activeShiftId
     }, {
       headers: { 'Authorization': `Bearer ${token}` }

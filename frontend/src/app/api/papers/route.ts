@@ -1,6 +1,8 @@
 // src/app/api/papers/route.ts
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-static';
+
 // 1. We securely store the JSON dataset on the server
 const mockPaperData = {
   "paperId": "2026-math-practice-001",

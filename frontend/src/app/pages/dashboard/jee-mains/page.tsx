@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getApiBaseUrl } from "../../../../lib/apiConfig";
 
 // Real NTA schedule days for January
 const janExamDays = [22, 23, 24, 28, 29];
@@ -91,7 +92,7 @@ function JeeExamPageContent() {
   useEffect(() => {
     const fetchDbShifts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/exams");
+        const response = await fetch(`${getApiBaseUrl()}/api/exams`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch exams");
